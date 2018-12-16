@@ -7,5 +7,5 @@ def clima():
 
 
 @clima.command()
-def load():
-    click.echo('Loading data...')
+def init():
+    click.echo('Loading cities...')
