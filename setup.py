@@ -22,7 +22,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'clima = crawler.cli:clima',
+            'clima = clima.cli:clima',
         ]
     }
 )

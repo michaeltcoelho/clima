@@ -52,7 +52,3 @@ class ClimaTempoMetricScraper(Scraper):
             'max_temp': clean_temp(tds[2].text),
             'rain': tds[3].text,
         }
-
-
-class ClimaTempoCityScraper(Scraper):
-    pass
