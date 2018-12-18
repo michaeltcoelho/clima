@@ -1,10 +1,13 @@
 import abc
 import pathlib
+import pprint
 import queue
 import threading
 from dataclasses import dataclass
 
+import huepy as hue
 from selenium import webdriver
+from selenium.common.exceptions import WebDriverException
 
 
 DRIVERS_PATH = pathlib.Path(__file__).parent / 'drivers'
@@ -72,7 +75,7 @@ class AsyncScraperRunner(threading.Thread):
         self.setDaemon(True)
         self.start()
 
-    # TODO: handle exceptions on scraper
+    # TODO: better exception handling
     def run(self):
         """Thread run method."""
         try:
@@ -83,6 +86,9 @@ class AsyncScraperRunner(threading.Thread):
                 self.input_queue.task_done()
         except queue.Empty:
             pass
+        except WebDriverException as err:
+            print(hue.red(str(err)))
+            self.input_queue.task_done()
 
 
 class Crawler:
@@ -116,4 +122,4 @@ class Crawler:
                 data = self.output_queue.get_nowait()
                 yield data
         except queue.Empty:
-            print(f'No more data available :)')
+            print(hue.yellow('No more data available :)'))

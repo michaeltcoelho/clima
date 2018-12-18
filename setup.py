@@ -2,8 +2,10 @@ from setuptools import setup, find_packages
 
 requirements = [
     'beautifulsoup4==4.6.3',
-    'selenium==3.141.0',
+    'beautifultable==0.5.3',
     'Click==7.0',
+    'huepy==0.9.8.1',
+    'selenium==3.141.0',
 ]
 
 testing_requirements = [
