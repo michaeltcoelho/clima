@@ -1,7 +1,13 @@
 import abc
+import pathlib
 import queue
 import threading
 from dataclasses import dataclass
+
+from selenium import webdriver
+
+
+DRIVERS_PATH = pathlib.Path(__file__).parent / 'drivers'
 
 
 @dataclass
@@ -12,14 +18,45 @@ class Metric:
 class Scraper(abc.ABC):
     """Abstract class for specific scraper classes."""
 
-    def __init__(self, driver):
-        self.driver = driver
+    def __init__(self, driver_name):
+        self.driver_name = driver_name
+
+    def get_driver(self):
+        return DriverFactory.get_driver(self.driver_name)
 
     @abc.abstractmethod
     def scrape(self, url):
         """Method responsible for scraping data from a :param url
-        and returna python-like datastructure.
+        and return a python-like datastructure.
         """
+
+
+class DriverNotImplemented(RuntimeError):
+    pass
+
+
+class Driver(abc.ABC):
+
+    @abc.abstractstaticmethod
+    def get_driver():
+        pass
+
+
+class PhanthomJSDriver(Driver):
+
+    def get_driver():
+        driver_binary = DRIVERS_PATH / 'phantomjs'
+        driver = webdriver.PhantomJS(driver_binary)
+        return driver
+
+
+class DriverFactory:
+
+    @staticmethod
+    def get_driver(driver_name):
+        if driver_name == 'phantomjs':
+            return PhanthomJSDriver.get_driver()
+        raise DriverNotImplemented
 
 
 class AsyncScraperRunner(threading.Thread):
@@ -35,6 +72,7 @@ class AsyncScraperRunner(threading.Thread):
         self.setDaemon(True)
         self.start()
 
+    # TODO: handle exceptions on scraper
     def run(self):
         """Thread run method."""
         try:
