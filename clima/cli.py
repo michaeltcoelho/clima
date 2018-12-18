@@ -49,8 +49,12 @@ def clima():
 @clima.command(
     help='Display a given number of brazilian cities weather data ordered.'
 )
-@click.option('--concurrency', type=int, default=5)
-@click.option('--limit', type=int, default=10)
+@click.option(
+    '--concurrency', type=int, default=5, prompt=True,
+    help='The number of concurrent scrapers running.')
+@click.option(
+    '--limit', type=int, default=10, prompt=True,
+    help='How many cities do you wanna scrape?')
 def show(limit, concurrency):
     click.echo(hue.bg(hue.cyan(
         f'Crawling {limit} city(ies) with concurrency {concurrency}')))
