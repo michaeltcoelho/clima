@@ -18,6 +18,7 @@ setup(
     description='Climatempo crawler',
     author='michaeltcoelho',
     packages=find_packages(),
+    include_package_data=True,
     install_requires=requirements,
     extras_require={
         'testing': testing_requirements,

@@ -47,11 +47,14 @@ def clima():
 
 
 @clima.command(
-    help='Display the first 100 brazilian cities in alphabetical order.'
+    help='Display a given number of brazilian cities weather data ordered.'
 )
 @click.option('--concurrency', type=int, default=5)
-def show(concurrency):
-    cities_links = get_google_search_cities_links(limit=100)
+@click.option('--limit', type=int, default=10)
+def show(limit, concurrency):
+    click.echo(hue.bg(hue.cyan(
+        f'Crawling {limit} city(ies) with concurrency {concurrency}')))
+    cities_links = get_google_search_cities_links(limit=limit)
 
     google_climatempo_scraper = GoogleClimaTempoCityLinkScraper(driver_name='phantomjs')
     google_climatempo_crawler = Crawler(
