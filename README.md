@@ -56,7 +56,7 @@ You can pass as options the number of concurrent scrapers running and the number
 you want to scrape.
 
 ```bash
-clima show --concurrency 2 --limit 2
+clima show --concurrency 2 --limit 1
 ```
 
 Result:
