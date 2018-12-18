@@ -1,16 +1,13 @@
-import codecs
 import json
 import urllib3
 
 import beautifultable
 import click
 import huepy as hue
-from selenium import webdriver
 
 from clima import Crawler
 from clima.scrapers.climatempo import (
     ClimaTempoMetricScraper, GoogleClimaTempoCityLinkScraper,
-    ClimaTempoMetric,
 )
 from clima.utils import sanitize_string
 
